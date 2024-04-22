@@ -5,6 +5,31 @@ else
     set t_Co=256
 endif
 " -----------------------------------------------------------------------------
+set mouse=a 
+" -----------------------------------------------------------------------------
+nnoremap <C-S-c> "+y
+vnoremap <C-S-c> "+y
+" -----------------------------------------------------------------------------
+nnoremap <C-v> "+gP
+vnoremap <C-v> "+gP
+inoremap <C-v> <C-r>+
+" -----------------------------------------------------------------------------
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+" -----------------------------------------------------------------------------
+call plug#begin('~/.vim/plugged')
+
+Plug 'Exafunction/codeium.vim'
+Plug 'preservim/nerdtree'
+
+call plug#end()
+" -----------------------------------------------------------------------------
+nnoremap <F1> :wincmd w<CR>
+map <F2> :NERDTreeToggle<CR>
+autocmd VimEnter * NERDTree
+" -----------------------------------------------------------------------------
 filetype plugin indent on
 syntax on
 set title
@@ -112,10 +137,10 @@ function! LoadStatusLine()
         \ 'no' : 'Normal-Operator Pending',
         \ 'v'  : 'Visual',
         \ 'V'  : 'V-Line',
-        \ '' : 'V-Block',
+        \ '␖' : 'V-Block',
         \ 's'  : 'Select',
         \ 'S'  : 'S-Line',
-        \ '' : 'S-Block',
+        \ '␓' : 'S-Block',
         \ 'i'  : 'Insert',
         \ 'R'  : 'Replace',
         \ 'Rv' : 'V-Replace',
@@ -162,6 +187,7 @@ hi TabLineSel   guifg=#a1a2b0 guibg=#101120 gui=bold
 hi TabLineFill  guifg=#9192a0 guibg=#303140 gui=none
 
 hi Visual guifg=NONE guibg=#303140
-
-
-
+" -----------------------------------------------------------------------------
+if has("gui_running")
+        autocmd GUIEnter * colorscheme habamax
+endif
